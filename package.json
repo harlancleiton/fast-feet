@@ -1,0 +1,19 @@
+{
+  "name": "fast-feet",
+  "private": true,
+  "version": "1.0.0",
+  "license": "MIT",
+  "author": {
+    "name": "Harlan Cleiton",
+    "email": "harlancleiton@gmail.com",
+    "url": "https://github.com/harlancleiton"
+  },
+  "devDependencies": {
+    "lerna": "^3.20.2"
+  },
+  "workspaces": {
+    "packages": [
+      "server"
+    ]
+  }
+}
