@@ -1,4 +1,5 @@
 import Sequelize, { Model } from 'sequelize';
+import bcrypt from 'bcryptjs';
 
 import UserHook from './hooks/UserHook';
 
@@ -17,6 +18,10 @@ class User extends Model {
         },
       }
     );
+  }
+
+  checkPassword(rawPassword) {
+    return bcrypt.compareSync(rawPassword, this.password);
   }
 }
 
