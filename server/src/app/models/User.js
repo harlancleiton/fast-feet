@@ -1,5 +1,6 @@
 import Sequelize, { Model } from 'sequelize';
-import bcrypt from 'bcryptjs';
+
+import UserHook from './hooks/UserHook';
 
 class User extends Model {
   static init(sequelize) {
@@ -12,18 +13,7 @@ class User extends Model {
       {
         sequelize,
         hooks: {
-          beforeSave: user => {
-            if (user.changed('password')) {
-              const userChanged = user;
-              userChanged.password = bcrypt.hashSync(
-                userChanged.password,
-                Number(process.env.SALT_ROUNDS) || 10
-              );
-              return userChanged;
-            }
-
-            return user;
-          },
+          beforeSave: UserHook.hashPassword,
         },
       }
     );
