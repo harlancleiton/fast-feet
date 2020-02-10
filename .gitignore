@@ -174,3 +174,6 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
+
+# SQLite3
+*.sqlite
