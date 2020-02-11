@@ -6,9 +6,9 @@ class AuthMiddleware {
   async handle(req, res, next) {
     const authorization = req.header('Authorization');
 
-    const [, token] = authorization.split(' ');
-
     try {
+      const [, token] = authorization.split(' ');
+
       const auth = jwt.verify(token, config.secret);
       req.auth = auth;
 
