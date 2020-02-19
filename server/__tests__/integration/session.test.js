@@ -31,4 +31,15 @@ describe('Session', () => {
     expect(response.status).toEqual(401);
     expect(response.body.id).toBeUndefined();
   });
+
+  it('should be return an validation error', async () => {
+    const response = await request(app)
+      .post('/api/v1/sessions')
+      .send({ email: 'email' });
+
+    expect(response.status).toEqual(400);
+    expect(response.body.name).toEqual('ValidationError');
+    expect(response.body.errors.length).toEqual(2);
+    expect(response.body.inner.length).toEqual(2);
+  });
 });
