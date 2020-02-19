@@ -9,7 +9,7 @@ const routes = new Router();
 
 routes.post('/sessions', SessionController.store);
 
-routes.use(AuthMiddleware.handle);
+routes.use(AuthMiddleware);
 
 routes.get('/me', MeController.index);
 
