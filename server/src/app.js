@@ -1,5 +1,6 @@
 import './bootstrap';
 import express from 'express';
+import morgan from 'morgan';
 
 import routes from './routes';
 
@@ -15,6 +16,8 @@ class App {
 
   middlewares() {
     this.server.use(express.json());
+
+    this.server.use(morgan('dev'));
   }
 
   routes() {
