@@ -3,14 +3,14 @@ import S3 from '../../../lib/S3';
 import awsConfig from '../../../config/aws';
 
 class S3FileHook {
-  deleteS3(s3file) {
+  deleteFromStorage(s3file) {
     S3.deleteObject(
       { Bucket: awsConfig.bucket, Key: s3file.key },
       function() {}
     );
   }
 
-  getUrl(s3file) {
+  getSignedUrl(s3file) {
     const url = S3.getSignedUrl('getObject', {
       Bucket: awsConfig.bucket,
       Key: s3file.key,

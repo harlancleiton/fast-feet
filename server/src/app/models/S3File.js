@@ -13,9 +13,9 @@ class S3File extends Model {
         sequelize,
         tableName: 's_3_files',
         hooks: {
-          afterFind: S3FileHook.getUrl,
-          afterSave: S3FileHook.getUrl,
-          afterDestroy: S3FileHook.deleteS3,
+          afterFind: S3FileHook.getSignedUrl,
+          afterSave: S3FileHook.getSignedUrl,
+          afterDestroy: S3FileHook.deleteFromStorage,
         },
       }
     );
