@@ -4,16 +4,19 @@ import factory from '../factory';
 import app from '../../src/app';
 import jwtService from '../../src/app/services/JwtService';
 import truncate from '../util/truncate';
+import Recipient from '../../src/app/models/Recipient';
 
 describe('Recipient', () => {
+  let token;
+
   beforeEach(async () => {
     await truncate();
+
+    const user = await factory.create('User', { password: 'admin' });
+    token = (await jwtService.login(user.email, 'admin')).token;
   });
 
   it('should be return a new recipient', async () => {
-    const user = await factory.create('User', { password: 'admin' });
-    const { token } = await jwtService.login(user.email, 'admin');
-
     const recipient = await factory.build('Recipient');
 
     const response = await request(app)
@@ -31,10 +34,34 @@ describe('Recipient', () => {
     expect(response.body.cep).toEqual(recipient.cep);
   });
 
-  it('should return http code 204 after update the recipient', async () => {
-    const user = await factory.create('User', { password: 'admin' });
-    const { token } = await jwtService.login(user.email, 'admin');
+  it('should return a recipient', async () => {
+    const recipient = await factory.create('Recipient');
 
+    const response = await request(app)
+      .get(`/api/v1/recipients/${recipient.id}`)
+      .set('Authorization', `Bearer ${token}`)
+      .send();
+
+    expect(response.status).toEqual(200);
+    expect(response.body.id).toEqual(recipient.id);
+  });
+
+  it('should return a recipients pagination', async () => {
+    // const recipient =
+    await factory.create('Recipient');
+
+    const response = await request(app)
+      .get('/api/v1/recipients')
+      .set('Authorization', `Bearer ${token}`)
+      .send();
+
+    expect(response.status).toEqual(200);
+    expect(response.body.paginate).toBeDefined();
+    // TODO add contain recipient
+    // expect(response.body.rows).toContain(recipient.dataValues);
+  });
+
+  it('should return http code 204 after update the recipient', async () => {
     const recipient = await factory.create('Recipient');
 
     const response = await request(app)
@@ -63,13 +90,25 @@ describe('Recipient', () => {
   });
 
   it('should return the http 404 code when updating a non-existent recipient', async () => {
-    const user = await factory.create('User', { password: 'admin' });
-    const { token } = await jwtService.login(user.email, 'admin');
-
     const response = await request(app)
       .put('/api/v1/recipients/id')
-      .set('Authorization', `Bearer ${token}`);
+      .set('Authorization', `Bearer ${token}`)
+      .send();
 
     expect(response.status).toEqual(404);
+  });
+
+  it('should return the http 204 code when delete recipient', async () => {
+    const recipient = await factory.create('Recipient');
+
+    const response = await request(app)
+      .delete(`/api/v1/recipients/${recipient.id}`)
+      .set('Authorization', `Bearer ${token}`)
+      .send();
+
+    expect(response.status).toEqual(204);
+
+    const checkRecipient = await Recipient.findByPk(recipient.id);
+    expect(checkRecipient).toBeNull();
   });
 });

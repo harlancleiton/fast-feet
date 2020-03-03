@@ -4,7 +4,7 @@ export default function(req, res, next) {
 
     const offset = (page - 1) * limit;
 
-    req.pagination = { offset, limit };
+    req.pagination = { offset, limit: Number(limit), page };
   }
 
   return next();
