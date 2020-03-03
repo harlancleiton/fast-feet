@@ -3,6 +3,7 @@ import express from 'express';
 import morgan from 'morgan';
 
 import routes from './routes';
+import PaginateMiddleware from './app/middlewares/PaginateMiddleware';
 
 import './database';
 
@@ -18,6 +19,8 @@ class App {
     this.server.use(express.json());
 
     this.server.use(morgan('dev'));
+
+    this.server.use(PaginateMiddleware);
   }
 
   routes() {
