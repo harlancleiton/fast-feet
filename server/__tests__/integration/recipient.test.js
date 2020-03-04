@@ -47,8 +47,7 @@ describe('Recipient', () => {
   });
 
   it('should return a recipients pagination', async () => {
-    // const recipient =
-    await factory.create('Recipient');
+    const recipient = await factory.create('Recipient');
 
     const response = await request(app)
       .get('/api/v1/recipients')
@@ -57,8 +56,7 @@ describe('Recipient', () => {
 
     expect(response.status).toEqual(200);
     expect(response.body.paginate).toBeDefined();
-    // TODO add contain recipient
-    // expect(response.body.rows).toContain(recipient.dataValues);
+    expect(response.body.rows[0].id).toEqual(recipient.id);
   });
 
   it('should return http code 204 after update the recipient', async () => {
