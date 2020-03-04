@@ -6,6 +6,8 @@ class Deliveryman extends Model {
       {
         name: Sequelize.STRING,
         email: Sequelize.STRING,
+        shutdownDate: Sequelize.DATE,
+        active: Sequelize.BOOLEAN,
       },
       { sequelize, tableName: 'deliverymen' }
     );
