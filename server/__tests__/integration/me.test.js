@@ -16,7 +16,8 @@ describe('Me', () => {
 
     const response = await request(app)
       .get('/api/v1/me')
-      .set('Authorization', `Bearer ${token}`);
+      .set('Authorization', `Bearer ${token}`)
+      .send();
 
     expect(response.status).toEqual(200);
     expect(response.body.id).toEqual(user.id);
@@ -27,7 +28,8 @@ describe('Me', () => {
   it('should return an unauthorization error', async () => {
     const response = await request(app)
       .get('/api/v1/me')
-      .set('Authorization', `Bearer fake-token`);
+      .set('Authorization', `Bearer fake-token`)
+      .send();
 
     expect(response.status).toEqual(401);
     expect(response.body.id).toBeUndefined();
