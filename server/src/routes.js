@@ -10,7 +10,9 @@ import AuthMiddleware from './app/middlewares/AuthMiddleware';
 import ValidatorMiddleware from './app/middlewares/ValidatorMiddleware';
 import Login from './app/validators/Login';
 import MulterMiddleware from './app/middlewares/MulterMiddleware';
-import WhereMiddleware from './app/middlewares/WhereMiddleware';
+import WhereMiddleware, {
+  transformLikeable,
+} from './app/middlewares/WhereMiddleware';
 
 const routes = new Router();
 
@@ -24,10 +26,10 @@ routes.get('/recipients/:id', RecipientController.show);
 routes.get(
   '/recipients',
   WhereMiddleware(
-    { op: Op.iLike, name: 'name' },
-    { op: Op.iLike, name: 'city' },
-    { op: Op.iLike, name: 'state' },
-    { op: Op.iLike, name: 'cep' }
+    { op: Op.iLike, name: 'name', transform: transformLikeable },
+    { op: Op.iLike, name: 'city', transform: transformLikeable },
+    { op: Op.iLike, name: 'state', transform: transformLikeable },
+    { op: Op.iLike, name: 'cep', transform: transformLikeable }
   ),
   RecipientController.index
 );
