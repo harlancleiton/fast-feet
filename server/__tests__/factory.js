@@ -1,9 +1,12 @@
+import '../src/bootstrap';
+
 import faker from 'faker';
 import { factory } from 'factory-girl';
 
 import User from '../src/app/models/User';
 import Recipient from '../src/app/models/Recipient';
 import Deliveryman from '../src/app/models/Deliveryman';
+import S3File from '../src/app/models/S3File';
 
 factory.define('User', User, () => ({
   name: faker.name.findName(),
@@ -31,5 +34,10 @@ factory.define('Deliveryman', Deliveryman, () => {
     active,
   };
 });
+
+factory.define('S3File', S3File, () => ({
+  key: faker.system.commonFileName(),
+  name: faker.system.fileName(),
+}));
 
 export default factory;

@@ -42,5 +42,20 @@ routes.post(
   MulterMiddleware('avatar'),
   DeliverymanController.store
 );
+routes.get('/deliverymen/:id', DeliverymanController.show);
+routes.get(
+  '/deliverymen',
+  WhereMiddleware(
+    { op: Op.iLike, name: 'name', transform: transformLikeable },
+    { op: Op.iLike, name: 'email', transform: transformLikeable }
+  ),
+  DeliverymanController.index
+);
+routes.put(
+  '/deliverymen/:id',
+  MulterMiddleware('avatar'),
+  DeliverymanController.update
+);
+routes.delete('/deliverymen/:id', DeliverymanController.destroy);
 
 export default routes;
