@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { Op } from 'sequelize';
+import { UI } from 'bull-board';
 
 import SessionController from './app/controllers/SessionController';
 import MeController from './app/controllers/MeController';
@@ -15,6 +16,8 @@ import WhereMiddleware, {
 } from './app/middlewares/WhereMiddleware';
 
 const routes = new Router();
+
+if (process.env.NODE_ENV === 'development') routes.use('/bull-dashboard', UI);
 
 routes.post('/sessions', ValidatorMiddleware(Login), SessionController.store);
 
