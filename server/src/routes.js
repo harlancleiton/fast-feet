@@ -6,6 +6,7 @@ import SessionController from './app/controllers/SessionController';
 import MeController from './app/controllers/MeController';
 import RecipientController from './app/controllers/RecipientController';
 import DeliverymanController from './app/controllers/DeliverymanController';
+import DeliveryController from './app/controllers/DeliveryController';
 
 import AuthMiddleware from './app/middlewares/AuthMiddleware';
 import ValidatorMiddleware from './app/middlewares/ValidatorMiddleware';
@@ -60,5 +61,7 @@ routes.put(
   DeliverymanController.update
 );
 routes.delete('/deliverymen/:id', DeliverymanController.destroy);
+
+routes.post('/deliveries', DeliveryController.store);
 
 export default routes;
