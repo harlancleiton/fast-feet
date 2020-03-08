@@ -2,8 +2,8 @@ import request from 'supertest';
 import factory from '../factory';
 
 import app from '../../src/app';
-import jwtService from '../../src/app/services/JwtService';
 import truncate from '../util/truncate';
+import generateJwt from '../util/generateJwt';
 import Recipient from '../../src/app/models/Recipient';
 
 describe('Recipient', () => {
@@ -12,8 +12,7 @@ describe('Recipient', () => {
   beforeEach(async () => {
     await truncate();
 
-    const user = await factory.create('User', { password: 'admin' });
-    token = (await jwtService.login(user.email, 'admin')).token;
+    token = await generateJwt();
   });
 
   it('should be return a new recipient', async () => {

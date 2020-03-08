@@ -2,8 +2,8 @@ import request from 'supertest';
 import factory from '../factory';
 
 import app from '../../src/app';
-import jwtService from '../../src/app/services/JwtService';
 import truncate from '../util/truncate';
+import generateJwt from '../util/generateJwt';
 
 describe('Me', () => {
   beforeEach(async () => {
@@ -12,7 +12,7 @@ describe('Me', () => {
 
   it('should return the logged in user at the time of request', async () => {
     const user = await factory.create('User', { password: 'admin' });
-    const { token } = await jwtService.login(user.email, 'admin');
+    const token = await generateJwt(user, 'admin');
 
     const response = await request(app)
       .get('/api/v1/me')

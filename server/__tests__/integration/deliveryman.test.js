@@ -3,8 +3,8 @@ import request from 'supertest';
 import factory from '../factory';
 
 import app from '../../src/app';
-import jwtService from '../../src/app/services/JwtService';
 import truncate from '../util/truncate';
+import generateJwt from '../util/generateJwt';
 import Deliveryman from '../../src/app/models/Deliveryman';
 
 describe('Deliveryman', () => {
@@ -13,8 +13,7 @@ describe('Deliveryman', () => {
   beforeEach(async () => {
     await truncate();
 
-    const user = await factory.create('User', { password: 'admin' });
-    token = (await jwtService.login(user.email, 'admin')).token;
+    token = await generateJwt();
   });
 
   it('should be return a new deliveryman', async () => {
