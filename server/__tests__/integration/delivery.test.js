@@ -10,6 +10,8 @@ import { SendMail } from '../../src/app/jobs';
 describe('Delivery', () => {
   let token;
 
+  const path = id => (id ? `/api/v1/deliveries/${id}` : '/api/v1/deliveries');
+
   beforeEach(async () => {
     await truncate();
 
@@ -28,7 +30,7 @@ describe('Delivery', () => {
     jest.spyOn(Queue, 'add').mockImplementation(() => {});
 
     const response = await request(app)
-      .post('/api/v1/deliveries')
+      .post(path())
       .set('Authorization', `Bearer ${token}`)
       .send(delivery.toJSON());
 
@@ -44,5 +46,28 @@ describe('Delivery', () => {
     expect(response.body).toHaveProperty('id');
     expect(response.body.recipient_id).toBe(recipient.id);
     expect(response.body.deliveryman_id).toBe(deliveryman.id);
+  });
+
+  it('should return http code 204 after update the delivery', async () => {
+    const delivery = await factory.create('Delivery');
+
+    const response = await request(app)
+      .put(path(delivery.id))
+      .set('Authorization', `Bearer ${token}`)
+      .send({ product: 'Lorem Ipsum' });
+
+    await delivery.reload();
+
+    expect(response.status).toEqual(204);
+    expect(delivery.product).toEqual('Lorem Ipsum');
+  });
+
+  it('should return the http 404 code when updating a non-existent delivery', async () => {
+    const response = await request(app)
+      .put(path(10000))
+      .set('Authorization', `Bearer ${token}`)
+      .send();
+
+    expect(response.status).toEqual(404);
   });
 });

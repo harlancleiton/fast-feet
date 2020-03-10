@@ -23,6 +23,21 @@ class DeliveryController {
 
     return res.status(201).json(delivery);
   }
+
+  async update(req, res) {
+    const { id } = req.params;
+    const { product } = req.body;
+
+    const delivery = await Delivery.findByPk(id);
+
+    if (!delivery) return res.status(404).json();
+
+    delivery.setAttributes({ product });
+
+    await delivery.save();
+
+    return res.status(204).json();
+  }
 }
 
 export default new DeliveryController();

@@ -41,8 +41,29 @@ factory.define('S3File', S3File, () => ({
   name: faker.system.fileName(),
 }));
 
-factory.define('Delivery', Delivery, () => ({
-  product: faker.commerce.productName(),
-}));
+factory.define(
+  'Delivery',
+  Delivery,
+  () => ({
+    product: faker.commerce.productName(),
+  }),
+  {
+    afterBuild: async (model, attrs) => {
+      const delivery = model;
+
+      if (!attrs.recipient_id) {
+        const recipient = await factory.create('Recipient');
+        delivery.recipient_id = recipient.id;
+      }
+
+      if (!attrs.deliveryman_id) {
+        const deliveryman = await factory.create('Deliveryman');
+        delivery.deliveryman_id = deliveryman.id;
+      }
+
+      return delivery;
+    },
+  }
+);
 
 export default factory;
