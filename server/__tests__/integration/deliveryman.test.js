@@ -10,6 +10,8 @@ import Deliveryman from '../../src/app/models/Deliveryman';
 describe('Deliveryman', () => {
   let token;
 
+  const path = id => (id ? `/api/v1/deliverymen/${id}` : '/api/v1/deliverymen');
+
   beforeEach(async () => {
     await truncate();
 
@@ -23,7 +25,7 @@ describe('Deliveryman', () => {
     });
 
     const response = await request(app)
-      .post('/api/v1/deliverymen')
+      .post(path())
       .set('Authorization', `Bearer ${token}`)
       .attach('avatar', resolve(__dirname, '..', 'avatar-test.png'))
       .field('name', deliveryman.name)
@@ -43,7 +45,7 @@ describe('Deliveryman', () => {
     });
 
     const response = await request(app)
-      .get(`/api/v1/deliverymen/${deliveryman.id}`)
+      .get(path(deliveryman.id))
       .set('Authorization', `Bearer ${token}`)
       .send();
 
@@ -63,7 +65,7 @@ describe('Deliveryman', () => {
     await factory.create('Deliveryman');
 
     const response = await request(app)
-      .get('/api/v1/deliverymen')
+      .get(path())
       .set('Authorization', `Bearer ${token}`)
       .send();
 
@@ -99,18 +101,18 @@ describe('Deliveryman', () => {
 
   it('should return the http 404 code when updating a non-existent deliveryman', async () => {
     const response = await request(app)
-      .put('/api/v1/recipients/10000')
+      .put(path(10000))
       .set('Authorization', `Bearer ${token}`)
       .send();
 
     expect(response.status).toEqual(404);
   });
 
-  it('should return the http 204 code when delete recipient', async () => {
+  it('should return the http 204 code when delete deliveryman', async () => {
     const deliveryman = await factory.create('Deliveryman');
 
     const response = await request(app)
-      .delete(`/api/v1/deliverymen/${deliveryman.id}`)
+      .delete(path(deliveryman.id))
       .set('Authorization', `Bearer ${token}`)
       .send();
 
@@ -122,7 +124,7 @@ describe('Deliveryman', () => {
 
   it('should return the http 404 code when deleting a non-existent deliveryman', async () => {
     const response = await request(app)
-      .delete('/api/v1/deliverymen/10000')
+      .delete(path(10000))
       .set('Authorization', `Bearer ${token}`)
       .send();
 
