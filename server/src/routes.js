@@ -63,6 +63,17 @@ routes.put(
 routes.delete('/deliverymen/:id', DeliverymanController.destroy);
 
 routes.post('/deliveries', DeliveryController.store);
+routes.get(
+  '/deliveries',
+  WhereMiddleware({
+    op: Op.iLike,
+    name: 'product',
+    transform: transformLikeable,
+  }),
+  DeliveryController.index
+);
+routes.get('/deliveries/:id', DeliveryController.show);
 routes.put('/deliveries/:id', DeliveryController.update);
+routes.delete('/deliveries/:id', DeliveryController.destroy);
 
 export default routes;

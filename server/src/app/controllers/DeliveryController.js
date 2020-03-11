@@ -24,6 +24,35 @@ class DeliveryController {
     return res.status(201).json(delivery);
   }
 
+  async index(req, res) {
+    const {
+      where,
+      pagination: { offset, limit },
+    } = req;
+
+    const deliveries = await Delivery.findAndCountAll({
+      where: where || undefined,
+      offset,
+      limit,
+    });
+
+    const result = Object.assign(deliveries, {
+      paginate: { page: req.pagination.page, limit: req.pagination.limit },
+    });
+
+    return res.json(result);
+  }
+
+  async show(req, res) {
+    const { id } = req.params;
+
+    const delivery = await Delivery.findByPk(id);
+
+    if (!delivery) return res.status(404).json();
+
+    return res.json(delivery);
+  }
+
   async update(req, res) {
     const { id } = req.params;
     const { product } = req.body;
@@ -34,6 +63,19 @@ class DeliveryController {
 
     delivery.setAttributes({ product });
 
+    await delivery.save();
+
+    return res.status(204).json();
+  }
+
+  async destroy(req, res) {
+    const { id } = req.params;
+
+    const delivery = await Delivery.findByPk(id);
+
+    if (!delivery) return res.status(404).json();
+
+    delivery.setAttributes({ canceledAt: new Date() });
     await delivery.save();
 
     return res.status(204).json();
