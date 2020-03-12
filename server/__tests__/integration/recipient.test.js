@@ -20,7 +20,7 @@ describe('Recipient', () => {
 
     const response = await request(app)
       .post('/api/v1/recipients')
-      .set('Authorization', `Bearer ${token}`)
+      .auth(token, { type: 'bearer' })
       .send(recipient.dataValues);
 
     expect(response.status).toEqual(201);
@@ -38,7 +38,7 @@ describe('Recipient', () => {
 
     const response = await request(app)
       .get(`/api/v1/recipients/${recipient.id}`)
-      .set('Authorization', `Bearer ${token}`)
+      .auth(token, { type: 'bearer' })
       .send();
 
     expect(response.status).toEqual(200);
@@ -50,7 +50,7 @@ describe('Recipient', () => {
 
     const response = await request(app)
       .get('/api/v1/recipients')
-      .set('Authorization', `Bearer ${token}`)
+      .auth(token, { type: 'bearer' })
       .send();
 
     expect(response.status).toEqual(200);
@@ -63,7 +63,7 @@ describe('Recipient', () => {
 
     const response = await request(app)
       .put(`/api/v1/recipients/${recipient.id}`)
-      .set('Authorization', `Bearer ${token}`)
+      .auth(token, { type: 'bearer' })
       .send({
         name: 'Harlan Cleiton',
         street: 'Lorem Ipsum',
@@ -89,7 +89,7 @@ describe('Recipient', () => {
   it('should return the http 404 code when updating a non-existent recipient', async () => {
     const response = await request(app)
       .put('/api/v1/recipients/id')
-      .set('Authorization', `Bearer ${token}`)
+      .auth(token, { type: 'bearer' })
       .send();
 
     expect(response.status).toEqual(404);
@@ -100,7 +100,7 @@ describe('Recipient', () => {
 
     const response = await request(app)
       .delete(`/api/v1/recipients/${recipient.id}`)
-      .set('Authorization', `Bearer ${token}`)
+      .auth(token, { type: 'bearer' })
       .send();
 
     expect(response.status).toEqual(204);

@@ -16,7 +16,7 @@ describe('Me', () => {
 
     const response = await request(app)
       .get('/api/v1/me')
-      .set('Authorization', `Bearer ${token}`)
+      .auth(token, { type: 'bearer' })
       .send();
 
     expect(response.status).toEqual(200);

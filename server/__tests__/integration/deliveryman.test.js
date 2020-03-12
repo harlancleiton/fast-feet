@@ -26,7 +26,7 @@ describe('Deliveryman', () => {
 
     const response = await request(app)
       .post(path())
-      .set('Authorization', `Bearer ${token}`)
+      .auth(token, { type: 'bearer' })
       .attach('avatar', resolve(__dirname, '..', 'avatar-test.png'))
       .field('name', deliveryman.name)
       .field('email', deliveryman.email);
@@ -46,7 +46,7 @@ describe('Deliveryman', () => {
 
     const response = await request(app)
       .get(path(deliveryman.id))
-      .set('Authorization', `Bearer ${token}`)
+      .auth(token, { type: 'bearer' })
       .send();
 
     expect(response.status).toBe(200);
@@ -66,7 +66,7 @@ describe('Deliveryman', () => {
 
     const response = await request(app)
       .get(path())
-      .set('Authorization', `Bearer ${token}`)
+      .auth(token, { type: 'bearer' })
       .send();
 
     expect(response.status).toEqual(200);
@@ -84,7 +84,7 @@ describe('Deliveryman', () => {
 
     const response = await request(app)
       .put(`/api/v1/deliverymen/${deliveryman.id}`)
-      .set('Authorization', `Bearer ${token}`)
+      .auth(token, { type: 'bearer' })
       .attach('avatar', resolve(__dirname, '..', 'avatar-test.png'))
       .field('name', 'Harlan Cleiton')
       .field('email', 'harlancleiton@gmail.com');
@@ -102,7 +102,7 @@ describe('Deliveryman', () => {
   it('should return the http 404 code when updating a non-existent deliveryman', async () => {
     const response = await request(app)
       .put(path(10000))
-      .set('Authorization', `Bearer ${token}`)
+      .auth(token, { type: 'bearer' })
       .send();
 
     expect(response.status).toEqual(404);
@@ -113,7 +113,7 @@ describe('Deliveryman', () => {
 
     const response = await request(app)
       .delete(path(deliveryman.id))
-      .set('Authorization', `Bearer ${token}`)
+      .auth(token, { type: 'bearer' })
       .send();
 
     expect(response.status).toEqual(204);
@@ -125,7 +125,7 @@ describe('Deliveryman', () => {
   it('should return the http 404 code when deleting a non-existent deliveryman', async () => {
     const response = await request(app)
       .delete(path(10000))
-      .set('Authorization', `Bearer ${token}`)
+      .auth(token, { type: 'bearer' })
       .send();
 
     expect(response.status).toEqual(404);
