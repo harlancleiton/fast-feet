@@ -7,6 +7,7 @@ import MeController from './app/controllers/MeController';
 import RecipientController from './app/controllers/RecipientController';
 import DeliverymanController from './app/controllers/DeliverymanController';
 import DeliveryController from './app/controllers/DeliveryController';
+import DeliverymanDeliveryController from './app/controllers/DeliverymanDeliveryController';
 
 import AuthMiddleware from './app/middlewares/AuthMiddleware';
 import ValidatorMiddleware from './app/middlewares/ValidatorMiddleware';
@@ -21,6 +22,11 @@ const routes = new Router();
 if (process.env.NODE_ENV === 'development') routes.use('/bull-dashboard', UI);
 
 routes.post('/sessions', ValidatorMiddleware(Login), SessionController.store);
+
+routes.get(
+  '/deliveryman/:deliverymanId/deliveries',
+  DeliverymanDeliveryController.index
+);
 
 routes.use(AuthMiddleware);
 
