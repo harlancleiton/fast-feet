@@ -8,10 +8,11 @@ import RecipientController from './app/controllers/RecipientController';
 import DeliverymanController from './app/controllers/DeliverymanController';
 import DeliveryController from './app/controllers/DeliveryController';
 import DeliverymanDeliveryController from './app/controllers/DeliverymanDeliveryController';
+import StartDeliveryController from './app/controllers/StartDeliveryController';
 
+import Login from './app/validators/Login';
 import AuthMiddleware from './app/middlewares/AuthMiddleware';
 import ValidatorMiddleware from './app/middlewares/ValidatorMiddleware';
-import Login from './app/validators/Login';
 import MulterMiddleware from './app/middlewares/MulterMiddleware';
 import WhereMiddleware, {
   transformLikeable,
@@ -27,6 +28,8 @@ routes.get(
   '/deliveryman/:deliverymanId/deliveries',
   DeliverymanDeliveryController.index
 );
+
+routes.put('/delivery/:id/start', StartDeliveryController.update);
 
 routes.use(AuthMiddleware);
 
