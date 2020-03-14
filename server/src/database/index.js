@@ -5,10 +5,18 @@ import Recipient from '../app/models/Recipient';
 import S3File from '../app/models/S3File';
 import Deliveryman from '../app/models/Deliveryman';
 import Delivery from '../app/models/Delivery';
+import DeliveryProblem from '../app/models/DeliveryProblem';
 
 import config from '../config/database';
 
-const models = [User, Recipient, S3File, Deliveryman, Delivery];
+const models = [
+  User,
+  Recipient,
+  S3File,
+  Deliveryman,
+  Delivery,
+  DeliveryProblem,
+];
 
 class Database {
   constructor() {
