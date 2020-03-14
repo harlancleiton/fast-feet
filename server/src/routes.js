@@ -9,6 +9,7 @@ import DeliverymanController from './app/controllers/DeliverymanController';
 import DeliveryController from './app/controllers/DeliveryController';
 import DeliverymanDeliveryController from './app/controllers/DeliverymanDeliveryController';
 import StartDeliveryController from './app/controllers/StartDeliveryController';
+import EndDeliveryController from './app/controllers/EndDeliveryController';
 
 import Login from './app/validators/Login';
 import AuthMiddleware from './app/middlewares/AuthMiddleware';
@@ -30,6 +31,11 @@ routes.get(
 );
 
 routes.put('/delivery/:id/start', StartDeliveryController.update);
+routes.put(
+  '/delivery/:id/end',
+  MulterMiddleware('signature'),
+  EndDeliveryController.update
+);
 
 routes.use(AuthMiddleware);
 
