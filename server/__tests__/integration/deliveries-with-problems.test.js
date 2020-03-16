@@ -5,7 +5,7 @@ import app from '../../src/app';
 import truncate from '../util/truncate';
 import generateJwt from '../util/generateJwt';
 
-describe('Delivery Problem', () => {
+describe('Delivery With Problems', () => {
   let token;
 
   beforeEach(async () => {

@@ -7,7 +7,7 @@ class DeliveriesWithProblemsController {
 
     const deliveries = await Delivery.findAndCountAll({
       include: [
-        { model: DeliveryProblem, required: true, as: 'deliveryProblem' },
+        { model: DeliveryProblem, required: true, as: 'deliveryProblems' },
       ],
       offset,
       limit,

@@ -11,6 +11,7 @@ import DeliverymanDeliveryController from './app/controllers/DeliverymanDelivery
 import StartDeliveryController from './app/controllers/StartDeliveryController';
 import EndDeliveryController from './app/controllers/EndDeliveryController';
 import DeliveriesWithProblemsController from './app/controllers/DeliveryWithProblemController';
+import DeliveryProblemsController from './app/controllers/DeliveryProblemsController';
 
 import Login from './app/validators/Login';
 import AuthMiddleware from './app/middlewares/AuthMiddleware';
@@ -37,6 +38,8 @@ routes.put(
   MulterMiddleware('signature'),
   EndDeliveryController.update
 );
+
+routes.post('/delivery/:deliveryId/problems', DeliveryProblemsController.store);
 
 routes.use(AuthMiddleware);
 
@@ -93,5 +96,7 @@ routes.put('/deliveries/:id', DeliveryController.update);
 routes.delete('/deliveries/:id', DeliveryController.destroy);
 
 routes.get('/deliveries-with-problems', DeliveriesWithProblemsController.index);
+
+routes.get('/delivery/:deliveryId/problems', DeliveryProblemsController.index);
 
 export default routes;
