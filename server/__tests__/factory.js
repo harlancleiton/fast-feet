@@ -8,6 +8,7 @@ import Recipient from '../src/app/models/Recipient';
 import Deliveryman from '../src/app/models/Deliveryman';
 import S3File from '../src/app/models/S3File';
 import Delivery from '../src/app/models/Delivery';
+import DeliveryProblem from '../src/app/models/DeliveryProblem';
 
 factory.define('User', User, () => ({
   name: faker.name.findName(),
@@ -62,6 +63,26 @@ factory.define(
       }
 
       return delivery;
+    },
+  }
+);
+
+factory.define(
+  'DeliveryProblem',
+  DeliveryProblem,
+  () => ({
+    description: faker.lorem.paragraph(),
+  }),
+  {
+    afterBuild: async (model, attrs) => {
+      const deliveryProblem = model;
+
+      if (!attrs.delivery_id) {
+        const delivery = await factory.create('Delivery');
+        deliveryProblem.delivery_id = delivery.id;
+      }
+
+      return deliveryProblem;
     },
   }
 );

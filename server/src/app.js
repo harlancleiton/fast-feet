@@ -26,7 +26,7 @@ class App {
 
     this.server.use(express.json());
 
-    this.server.use(morgan('dev'));
+    if (process.env.NODE_ENV !== 'test') this.server.use(morgan('dev'));
 
     this.server.use(PaginateMiddleware);
   }

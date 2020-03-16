@@ -10,6 +10,7 @@ import DeliveryController from './app/controllers/DeliveryController';
 import DeliverymanDeliveryController from './app/controllers/DeliverymanDeliveryController';
 import StartDeliveryController from './app/controllers/StartDeliveryController';
 import EndDeliveryController from './app/controllers/EndDeliveryController';
+import DeliveriesWithProblemsController from './app/controllers/DeliveryWithProblemController';
 
 import Login from './app/validators/Login';
 import AuthMiddleware from './app/middlewares/AuthMiddleware';
@@ -90,5 +91,7 @@ routes.get(
 routes.get('/deliveries/:id', DeliveryController.show);
 routes.put('/deliveries/:id', DeliveryController.update);
 routes.delete('/deliveries/:id', DeliveryController.destroy);
+
+routes.get('/deliveries-with-problems', DeliveriesWithProblemsController.index);
 
 export default routes;
