@@ -12,6 +12,7 @@ import StartDeliveryController from './app/controllers/StartDeliveryController';
 import EndDeliveryController from './app/controllers/EndDeliveryController';
 import DeliveriesWithProblemsController from './app/controllers/DeliveryWithProblemController';
 import DeliveryProblemsController from './app/controllers/DeliveryProblemsController';
+import CancelDeliveryController from './app/controllers/CancelDeliveryController';
 
 import Login from './app/validators/Login';
 import AuthMiddleware from './app/middlewares/AuthMiddleware';
@@ -98,5 +99,10 @@ routes.delete('/deliveries/:id', DeliveryController.destroy);
 routes.get('/deliveries-with-problems', DeliveriesWithProblemsController.index);
 
 routes.get('/delivery/:deliveryId/problems', DeliveryProblemsController.index);
+
+routes.delete(
+  '/problem/:problemId/cancel-delivery',
+  CancelDeliveryController.delete
+);
 
 export default routes;
