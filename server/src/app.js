@@ -1,5 +1,6 @@
 import './bootstrap';
 import express from 'express';
+import cors from 'cors';
 import morgan from 'morgan';
 import Youch from 'youch';
 import * as Sentry from '@sentry/node';
@@ -32,6 +33,8 @@ class App {
   }
 
   routes() {
+    this.server.use(cors({ origin: '*' }));
+
     this.server.use('/api/v1', routes);
 
     this.server.use(Sentry.Handlers.errorHandler());
