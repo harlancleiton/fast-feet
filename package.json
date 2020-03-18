@@ -9,6 +9,7 @@
     "url": "https://github.com/harlancleiton"
   },
   "scripts": {
+    "install": "lerna bootstrap",
     "test": "lerna run test --stream"
   },
   "husky": {
@@ -37,13 +38,13 @@
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-react": "^7.19.0",
+    "eslint-plugin-react-hooks": "^2.5.0",
     "husky": "^4.2.3",
     "lerna": "^3.20.2",
-    "lint-staged": "^10.0.8"
-  },
-  "workspaces": {
-    "packages": [
-      "server"
-    ]
+    "lint-staged": "^10.0.8",
+    "prettier": "^1.19.1"
   }
 }
