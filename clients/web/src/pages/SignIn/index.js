@@ -1,14 +1,17 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
 
 import Logo from '../../components/Logo';
 import Input from '../../components/Input';
 import { Container, FormContainer, SubmitButton } from './styles';
+import { signInRequest } from '../../store/modules/auth/actions';
 
 export default function SignIn() {
+  const dispatch = useDispatch();
+  const loading = useSelector(store => store.auth.loading);
   const formRef = useRef(null);
-  const [loading, setLoading] = useState(false);
 
   async function handleSubmit({ email, password }) {
     try {
@@ -28,9 +31,7 @@ export default function SignIn() {
         }
       );
 
-      setLoading(true);
-
-      console.tron.log({ email, password });
+      dispatch(signInRequest(email, password));
     } catch (err) {
       const validationErrors = {};
       if (err instanceof Yup.ValidationError) {
