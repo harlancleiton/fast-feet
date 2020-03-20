@@ -12,5 +12,7 @@ export default {
     placeholder: 'normal 16px Roboto, sans-serif',
     label: 'bold 14px Roboto, sans-serif',
     button: 'bold 16px Roboto, sans-serif',
+    navLink: 'bold 15px Roboto, sans-serif',
+    signOut: 'normal 14px Roboto, sans-serif',
   },
 };

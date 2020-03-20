@@ -18,3 +18,9 @@ export function signInFailure(error) {
     payload: { error },
   };
 }
+
+export function signOut() {
+  return {
+    type: '@auth/SIGN_OUT',
+  };
+}

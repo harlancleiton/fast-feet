@@ -22,7 +22,7 @@ export default function auth(state = INITIAL_STATE, action) {
       case '@auth/SIGN_IN_FAILURE':
         nextState.loading = false;
         break;
-      case '@auth/SING_OUT':
+      case '@auth/SIGN_OUT':
         nextState.token = null;
         nextState.signed = false;
         nextState.loading = false;
