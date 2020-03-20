@@ -9,6 +9,7 @@
     "url": "https://github.com/harlancleiton"
   },
   "scripts": {
+    "dev": "lerna run dev --stream",
     "install": "lerna bootstrap",
     "test": "lerna run test --stream"
   },
